@@ -8,7 +8,7 @@ class Controller {
       const registerList = await this.serviceEntity.getAllRegisters();
       return res.status(200).json(registerList);
     } catch (error) {
-      // error
+      return res.status(500).json({error: error.message});
     }
   }
 
@@ -18,7 +18,7 @@ class Controller {
       const register = await this.serviceEntity.getRegisterById(Number(id));
       return res.status(200).json(register);
     } catch (error) {
-      // error
+      return res.status(500).json({error: error.message});
     }
   }
 
@@ -31,7 +31,7 @@ class Controller {
         register: newRegister
       });
     } catch (error) {
-      // error
+      return res.status(500).json({error: error.message});
     }
   }
 
@@ -49,7 +49,7 @@ class Controller {
         message: 'Updated successfully'
       });
     } catch (error) {
-      // error
+      return res.status(500).json({error: error.message});
     }
   }
 
@@ -61,7 +61,7 @@ class Controller {
         message: `Id ${id} deleted successfully.`
       });
     } catch (error) {
-      // error
+      return res.status(500).json({error: error.message});
     }
   }
 }

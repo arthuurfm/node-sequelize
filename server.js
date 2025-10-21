@@ -1,4 +1,5 @@
 const app = require('./src/app.js');
+const { sequelize } = require('./src/database/models/index.js');
 
 const PORT = 3000;
 

@@ -10,6 +10,11 @@ class UserServices extends Services {
     const enrollmentsList = await student.getEnrolledClasses();
     return enrollmentsList;
   }
+
+  async getAllUserScope() {
+    const userList = await super.getRegistersByScope('allRegisters');
+    return userList;
+  }
 }
 
 module.exports = UserServices;

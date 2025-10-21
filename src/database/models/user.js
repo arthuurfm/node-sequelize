@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model { 
@@ -24,7 +25,18 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'users'
+    tableName: 'users',
+    paranoid: true,
+    defaultScope: {
+      where: {
+        active: true
+      }
+    },
+    scopes: {
+      allRegisters: {
+        where: {}
+      }
+    }
   });
   return User;
 };
