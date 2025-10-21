@@ -22,6 +22,16 @@ class Controller {
     }
   }
 
+  async getOne(req, res) {
+    const { ...params } = req.params;
+    try {
+      const register = await this.serviceEntity.getOneRegister(params);
+      return res.status(200).json(register);
+    } catch (error) {
+      return res.status(500).json({error: error.message});
+    }
+  }
+
   async createNew(req, res) {
     const registerData = req.body;
     try {

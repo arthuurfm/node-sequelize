@@ -8,10 +8,20 @@ class UserController extends Controller {
     super(userServices);
   }
 
-  async getEnrollments(req, res) {
+  async getActiveEnrollments(req, res) {
     const { studentId } = req.params;
     try {
-      const enrollmentsList = await userServices.getEnrollmentsByStudent(Number(studentId));
+      const enrollmentsList = await userServices.getActiveEnrollmentsByStudent(Number(studentId));
+      return res.status(200).json(enrollmentsList);
+    } catch (error) {
+      return res.status(500).json({error: error.message});
+    }
+  }
+  
+  async getAllEnrollments(req, res) {
+    const { studentId } = req.params;
+    try {
+      const enrollmentsList = await userServices.getAllEnrollmentsByStudent(Number(studentId));
       return res.status(200).json(enrollmentsList);
     } catch (error) {
       return res.status(500).json({error: error.message});

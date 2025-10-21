@@ -1,7 +1,8 @@
 'use strict';
+const isValid = require('../../helpers/validateCpfHelper.js');
+
 const {
-  Model,
-  Op
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model { 
@@ -14,12 +15,39 @@ module.exports = (sequelize, DataTypes) => {
         scope: { status: 'enrolled' },
         as: 'enrolledClasses'
       });
+      User.hasMany(models.Enrollment, {
+        foreignKey: 'student_id',
+        as: 'allEnrollments'
+      });
     }
   }
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    cpf: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: 'The "name" field must have at least 3 or a maximum of 30 characters.'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Invalid email format'
+        }
+      }
+    },
+    cpf: {
+      type: DataTypes.STRING,
+      validate: {
+        isValidCpf: (cpf) => {
+          if (!isValid(cpf)) throw new Error('invalid CPF');
+        }
+      }
+    },
     active: DataTypes.BOOLEAN,
     role: DataTypes.STRING
   }, {

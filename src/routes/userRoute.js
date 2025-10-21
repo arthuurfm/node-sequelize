@@ -14,7 +14,9 @@ router
   .post('/users', (req, res) => userController.createNew(req, res))
   .put('/users/:id', (req, res) => userController.update(req, res))
   .delete('/users/:id', (req, res) => userController.delete(req, res))
-  .get('/users/:studentId/enrollments', (req, res) => userController.getEnrollments(req, res))
+  .get('/users/:studentId/enrollments', (req, res) => userController.getActiveEnrollments(req, res))
+  .get('/users/:studentId/enrollments/all', (req, res) => userController.getAllEnrollments(req, res))
+  .get('/users/:studentId/enrollments/:id', (req, res) => userController.getOne(req, res))
   .post('/users/:studentId/enrollments', (req, res) => enrollmentController.createNew(req, res));
 
 module.exports = router;
