@@ -1,3 +1,5 @@
+const idConverter = require('../helpers/stringConverterHelper.js');
+
 class Controller {
   constructor(serviceEntity) {
     this.serviceEntity = serviceEntity;
@@ -15,7 +17,7 @@ class Controller {
   async getById(req, res) {
     const { id } = req.params;
     try {
-      const register = await this.serviceEntity.getRegisterById(Number(id));
+      const register = await this.serviceEntity.getRegistersByScope(Number(id));
       return res.status(200).json(register);
     } catch (error) {
       return res.status(500).json({error: error.message});
@@ -24,8 +26,9 @@ class Controller {
 
   async getOne(req, res) {
     const { ...params } = req.params;
+    const where = idConverter(params);
     try {
-      const register = await this.serviceEntity.getOneRegister(params);
+      const register = await this.serviceEntity.getOneRegister(where);
       return res.status(200).json(register);
     } catch (error) {
       return res.status(500).json({error: error.message});
@@ -46,10 +49,11 @@ class Controller {
   }
 
   async update(req, res) {
-    const { id } = req.params;
+    const { ...params} = req.params;
     const updatedData = req.body;
+    const where = idConverter(params);
     try {
-      const isUpdated = await this.serviceEntity.updateRegister(updatedData, Number(id));
+      const isUpdated = await this.serviceEntity.updateRegister(updatedData, where);
       if (!isUpdated) {
         return res.status(400).json({
           message: 'Register was not updated'

@@ -5,8 +5,8 @@ class Services {
     this.model = nameModel;
   }
 
-  async getAllRegisters() {
-    return dataSource[this.model].findAll();
+  async getAllRegisters(where = {}) {
+    return dataSource[this.model].findAll({where: { ...where }});
   }
 
   async getRegistersByScope(scope) {
@@ -21,10 +21,10 @@ class Services {
     return dataSource[this.model].create(registerData);
   }
 
-  async updateRegister(updatedData, id) {
+  async updateRegister(updatedData, where) {
     const updatedRegisterList = dataSource[this.model].update(
       updatedData,
-      {where: {id: id}}
+      {where: { ...where }}
     );
     if (updatedRegisterList[0] === 0) false;
     return true;

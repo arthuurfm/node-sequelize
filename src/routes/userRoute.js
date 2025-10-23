@@ -14,9 +14,11 @@ router
   .post('/users', (req, res) => userController.createNew(req, res))
   .put('/users/:id', (req, res) => userController.update(req, res))
   .delete('/users/:id', (req, res) => userController.delete(req, res))
-  .get('/users/:studentId/enrollments', (req, res) => userController.getActiveEnrollments(req, res))
-  .get('/users/:studentId/enrollments/all', (req, res) => userController.getAllEnrollments(req, res))
-  .get('/users/:studentId/enrollments/:id', (req, res) => userController.getOne(req, res))
-  .post('/users/:studentId/enrollments', (req, res) => enrollmentController.createNew(req, res));
+  .get('/users/:student_id/enrollments', (req, res) => userController.getActiveEnrollments(req, res))
+  .get('/users/:student_id/enrollments/all', (req, res) => userController.getAllEnrollments(req, res))
+  .get('/users/:student_id/enrollments/:id', (req, res) => enrollmentController.getOne(req, res))
+  .post('/users/:student_id/enrollments', (req, res) => enrollmentController.createNew(req, res))
+  .put('/users/:student_id/enrollments/:id', (req, res) => enrollmentController.update(req, res))
+  .delete('/users/:student_id/enrollments/:id', (req, res) => enrollmentController.delete(req, res));
 
 module.exports = router;
