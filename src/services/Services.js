@@ -17,18 +17,21 @@ class Services {
     return dataSource[this.model].findOne({ where: { ...where } });
   }
 
-  async getAndCountRegisters(where) {
-    return dataSource[this.model].findAndCountAll({ where: { ...where } });
+  async getAndCountRegisters(options) {
+    return dataSource[this.model].findAndCountAll({ ...options });
   }
 
   async createNewRegister(registerData) {
     return dataSource[this.model].create(registerData);
   }
 
-  async updateRegister(updatedData, where) {
+  async updateRegister(updatedData, where, transaction = {}) {
     const updatedRegisterList = dataSource[this.model].update(
       updatedData,
-      {where: { ...where }}
+      {
+        where: { ...where },
+        transaction: transaction
+      }
     );
     if (updatedRegisterList[0] === 0) false;
     return true;

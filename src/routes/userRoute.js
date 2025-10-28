@@ -10,9 +10,10 @@ const router = Router();
 router
   .get('/users', (req, res) => userController.getAll(req, res))
   .get('/users/all', (req, res) => userController.getAllUsers(req, res))
-  .get('/users/:id', (req, res) => userController.getById(req, res))
+  .get('/users/:id', (req, res) => userController.getOne(req, res))
   .post('/users', (req, res) => userController.createNew(req, res))
   .put('/users/:id', (req, res) => userController.update(req, res))
+  .put('/users/:student_id/cancel', (req, res) => userController.cancelStudentRegister(req, res))
   .delete('/users/:id', (req, res) => userController.delete(req, res))
   .get('/users/:student_id/enrollments', (req, res) => userController.getActiveEnrollments(req, res))
   .get('/users/:student_id/enrollments/all', (req, res) => userController.getAllEnrollments(req, res))

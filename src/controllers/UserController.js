@@ -36,6 +36,16 @@ class UserController extends Controller {
       return res.status(500).json({error: error.message});
     }
   }
+
+  async cancelStudentRegister(req, res) {
+    const { student_id } = req.params;
+    try {
+      await userServices.cancelUserAndEnrollments(Number(student_id));
+      return res.status(200).json({ message: `Enrollments ref. student ${student_id} canceled.` });
+    } catch (error) {
+      return res.status(500).json({error: error.message});
+    }
+  } 
 }
 
 module.exports = UserController;

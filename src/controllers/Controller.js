@@ -14,16 +14,6 @@ class Controller {
     }
   }
 
-  async getById(req, res) {
-    const { id } = req.params;
-    try {
-      const register = await this.serviceEntity.getRegistersByScope(Number(id));
-      return res.status(200).json(register);
-    } catch (error) {
-      return res.status(500).json({error: error.message});
-    }
-  }
-
   async getOne(req, res) {
     const { ...params } = req.params;
     const where = idConverter(params);

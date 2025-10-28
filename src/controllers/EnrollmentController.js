@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 const Controller = require('./Controller.js');
 const EnrollmentServices = require('../services/EnrollmentServices.js');
 
@@ -12,8 +14,10 @@ class EnrollmentController extends Controller {
     const { student_id } = req.params;
     try {
       const enrollmentsByStudentList = await enrollmentServices.getAndCountRegisters({
-        student_id: Number(student_id),
-        status: 'enrolled'
+        where: {
+          student_id: Number(student_id),
+          status: 'enrolled'
+        }
       });
       return res.status(200).json(enrollmentsByStudentList);
     } catch (error) {
@@ -25,7 +29,12 @@ class EnrollmentController extends Controller {
     const courseCapacity = 2;
     try {
       const crowdedCourses = await enrollmentServices.getAndCountRegisters({
-        status: 'enrolled'
+        where: {
+          status: 'enrolled'
+        },
+        attributes: ['course_id'],
+        group: ['course_id'],
+        having: Sequelize.literal(`count(course_id) >= ${courseCapacity}`)
       });
       return res.status(200).json(crowdedCourses);
     } catch (error) {
